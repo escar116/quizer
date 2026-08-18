@@ -144,6 +144,12 @@ header {
   justify-content: space-between;
 }
 
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .logo-area {
   display: flex;
   align-items: center;
@@ -380,6 +386,8 @@ main {
   display: flex;
   background-color: rgba(0, 0, 0, 0.15);
   min-height: 400px;
+  max-height: 520px;
+  overflow: hidden;
 }
 
 .line-numbers {
@@ -394,6 +402,7 @@ main {
   border-right: 1px solid var(--border-color);
   user-select: none;
   overflow-y: hidden;
+  flex-shrink: 0;
 }
 
 textarea#questions-input {
@@ -408,6 +417,24 @@ textarea#questions-input {
   padding: 1.5rem;
   resize: none;
   tab-size: 4;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Custom scrollbar for editor */
+textarea#questions-input::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+textarea#questions-input::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.15);
+}
+textarea#questions-input::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+textarea#questions-input::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 /* ==========================================

@@ -143,6 +143,60 @@ d5 = Core Programming Utility`;
     mainGrid.classList.toggle('editor-hidden');
   });
 
+  // GitHub Push Button
+  const githubPushBtn = document.getElementById('github-push-btn');
+  githubPushBtn.addEventListener('click', () => {
+    // Show toast notification
+    showToast('⏳ Launching GitHub push script...', 'info');
+
+    // Open the push_to_github.bat file — browser will prompt to open/download it
+    // The user must allow it to run locally (works when opening index.html as a file)
+    const link = document.createElement('a');
+    link.href = 'push_to_github.bat';
+    link.download = 'push_to_github.bat';
+    link.click();
+
+    setTimeout(() => {
+      showToast('✅ push_to_github.bat downloaded! Run it to push your changes.', 'success');
+    }, 800);
+  });
+
+  // Toast notification helper
+  function showToast(message, type = 'info') {
+    let toast = document.getElementById('aeroquiz-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'aeroquiz-toast';
+      toast.style.cssText = `
+        position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+        padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.95rem;
+        font-weight: 600; font-family: 'Outfit', sans-serif;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        transition: opacity 0.3s, transform 0.3s;
+        max-width: 360px;
+      `;
+      document.body.appendChild(toast);
+    }
+    const colors = {
+      info:    { bg: 'var(--bg-tertiary)',  color: 'var(--text-primary)', border: 'var(--border-color)' },
+      success: { bg: 'var(--success-bg)',   color: 'var(--success)',      border: 'var(--success-border)' },
+      error:   { bg: 'var(--danger-bg)',    color: 'var(--danger)',       border: 'var(--danger-border)' },
+    };
+    const c = colors[type] || colors.info;
+    toast.style.background   = c.bg;
+    toast.style.color         = c.color;
+    toast.style.border        = `1px solid ${c.border}`;
+    toast.style.opacity       = '1';
+    toast.style.transform     = 'translateY(0)';
+    toast.textContent         = message;
+
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.style.opacity   = '0';
+      toast.style.transform = 'translateY(10px)';
+    }, 4000);
+  }
+
   // Button actions
   btnLoadSample.addEventListener('click', () => {
     questionsInput.value = SAMPLE_QUESTIONS;
